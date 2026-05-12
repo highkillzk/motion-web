@@ -108,27 +108,51 @@ function MotionDemo() {
   return (
     <div className="max-w-sm mx-auto text-center px-4">
       {phase === "idle" && (
-        <button
-          onClick={runSpin}
-          className="motion-btn-pulse relative w-52 h-52 rounded-full mx-auto flex flex-col items-center justify-center gap-2 cursor-pointer select-none transition-transform duration-200 hover:scale-105 active:scale-95"
-          style={{ background: "linear-gradient(135deg, #5B1FA0 0%, #7B2FBE 40%, #9B59F5 80%, #BF7FFF 100%)" }}
-        >
-          <span style={{ fontSize: 42 }}>⚡</span>
-          <span className="font-syne font-extrabold text-2xl text-white tracking-tight">HIT MOTION</span>
-          <span className="text-white/55 text-xs font-semibold tracking-widest uppercase">tap to find out</span>
-        </button>
+        <div className="flex flex-col items-center gap-6">
+          {/* Outer rings */}
+          <div className="relative flex items-center justify-center">
+            {/* Ring 3 — outermost */}
+            <div className="absolute w-72 h-72 rounded-full border border-purple-500/10 animate-ping" style={{ animationDuration: "3s" }} />
+            {/* Ring 2 */}
+            <div className="absolute w-64 h-64 rounded-full border border-purple-500/15" />
+            {/* Ring 1 */}
+            <div className="absolute w-56 h-56 rounded-full border border-purple-400/20" />
+
+            {/* Main button */}
+            <button
+              onClick={runSpin}
+              className="motion-btn-pulse relative w-48 h-48 rounded-full flex flex-col items-center justify-center gap-3 cursor-pointer select-none transition-transform duration-200 hover:scale-105 active:scale-95"
+              style={{ background: "linear-gradient(160deg, #4A1590 0%, #7B2FBE 45%, #9B59F5 80%, #BF7FFF 100%)" }}
+            >
+              {/* Inner ring shine */}
+              <div className="absolute inset-2 rounded-full border border-white/10" />
+              {/* Logo */}
+              <Image src="/logo.png" alt="Motion" width={52} height={52}
+                className="relative z-10"
+                style={{ filter: "brightness(10) saturate(0)", objectFit: "contain" }} />
+              <span className="font-syne font-extrabold text-xl text-white tracking-wider relative z-10">HIT MOTION</span>
+            </button>
+          </div>
+          <span className="text-white/35 text-xs font-semibold tracking-widest uppercase">tap to get your move</span>
+        </div>
       )}
 
       {phase === "spinning" && (
-        <div
-          className="w-52 h-52 rounded-full mx-auto flex flex-col items-center justify-center gap-2"
-          style={{ background: "linear-gradient(135deg, #7B2FBE, #9B59F5)",
-            boxShadow: "0 0 80px rgba(123,47,190,0.7), 0 0 160px rgba(123,47,190,0.3)" }}
-        >
-          <span style={{ fontSize: 36 }}>{MOVES[displayIdx].emoji}</span>
-          <span className="font-syne font-bold text-sm text-white text-center px-5 leading-tight">
-            {MOVES[displayIdx].name}
-          </span>
+        <div className="flex flex-col items-center gap-6">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute w-64 h-64 rounded-full border border-purple-400/20 animate-spin" style={{ animationDuration: "3s" }} />
+            <div
+              className="w-48 h-48 rounded-full mx-auto flex flex-col items-center justify-center gap-2"
+              style={{ background: "linear-gradient(160deg, #4A1590, #7B2FBE, #9B59F5)",
+                boxShadow: "0 0 80px rgba(123,47,190,0.7), 0 0 160px rgba(123,47,190,0.3)" }}
+            >
+              <span style={{ fontSize: 32 }}>{MOVES[displayIdx].emoji}</span>
+              <span className="font-syne font-bold text-xs text-white text-center px-5 leading-tight">
+                {MOVES[displayIdx].name}
+              </span>
+            </div>
+          </div>
+          <span className="text-white/35 text-xs font-semibold tracking-widest uppercase">finding your move...</span>
         </div>
       )}
 
@@ -233,19 +257,32 @@ export default function Home() {
   const socialRef   = useFadeIn();
   const howRef      = useFadeIn();
   const downloadRef = useFadeIn();
+  const heroSectionRef = useRef<HTMLElement>(null);
+  const [stickyVisible, setStickyVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const hero = heroSectionRef.current;
+      if (!hero) return;
+      setStickyVisible(window.scrollY > hero.offsetHeight * 0.75);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#06000F] overflow-x-hidden">
       <Navbar />
 
-      {/* ── STICKY MOBILE CTA ──────────────────────────────── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
-        style={{ background: "linear-gradient(to top, #06000F 70%, transparent)", padding: "12px 16px 20px" }}>
+      {/* ── STICKY MOBILE CTA — only after scrolling past hero ── */}
+      <div className={`fixed bottom-0 left-0 right-0 z-40 md:hidden transition-all duration-300 ${
+        stickyVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+      }`} style={{ background: "linear-gradient(to top, #06000F 70%, transparent)", padding: "12px 16px 20px" }}>
         <AppStoreBtn size="md" full />
       </div>
 
       {/* ── HERO ────────────────────────────────────────────── */}
-      <section className="relative min-h-[100svh] flex items-center pt-20 pb-28 md:pb-20">
+      <section ref={heroSectionRef} className="relative min-h-[100svh] flex items-center pt-20 pb-28 md:pb-20">
         {/* BG */}
         <div className="absolute inset-0 dot-grid opacity-25 pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-[150px] opacity-12 pointer-events-none"
@@ -271,19 +308,12 @@ export default function Home() {
                 One tap picks tonight&apos;s move. Your crew votes. The night begins.
               </p>
 
-              {/* CTA — visible on desktop, hidden on mobile (sticky bar handles it) */}
-              <div className="hidden md:flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8">
+              {/* CTA — always visible above fold on all devices */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8">
                 <AppStoreBtn size="lg" />
                 <a href="#demo"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold text-white/55 border border-white/10 hover:border-purple-500/40 hover:text-white transition-all duration-200">
-                  Try It Now
-                </a>
-              </div>
-
-              {/* Mobile: small try it link */}
-              <div className="md:hidden mb-8">
-                <a href="#demo" className="text-sm font-semibold text-purple-400 underline underline-offset-4">
-                  Try the Motion button first &darr;
+                  className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-semibold text-white/55 border border-white/10 hover:border-purple-500/40 hover:text-white transition-all duration-200">
+                  Try It Free &darr;
                 </a>
               </div>
 
@@ -308,9 +338,15 @@ export default function Home() {
 
               {/* Phone */}
               <div className="relative animate-float" style={{ animationDuration: "5s" }}>
-                <div className="phone-mockup" style={{ width: 230 }}>
-                  <PhoneScreen src="/ss1.png" alt="Motion app" label="Hit Motion"
-                    gradient="linear-gradient(160deg,#3B1C8C 0%,#7B2FBE 50%,#9B59F5 100%)" />
+                <div className="phone-mockup" style={{ width: 248, borderRadius: 40, border: "2px solid rgba(155,89,245,0.35)",
+                  boxShadow: "0 0 0 1px rgba(255,255,255,0.06), 0 40px 100px rgba(0,0,0,0.7), 0 0 80px rgba(123,47,190,0.3)" }}>
+                  {/* Notch */}
+                  <div style={{ position: "absolute", top: 13, left: "50%", transform: "translateX(-50%)",
+                    width: 72, height: 6, background: "rgba(255,255,255,0.18)", borderRadius: 3, zIndex: 10 }} />
+                  {/* Screen */}
+                  <Image src="/ss1.png" alt="Motion app screen" width={248} height={537}
+                    className="w-full block" priority
+                    style={{ display: "block", borderRadius: 38, objectFit: "cover", objectPosition: "top" }} />
                 </div>
                 {/* Floating pills */}
                 <div className="absolute -left-14 top-1/4 glass rounded-2xl px-3 py-2.5 flex items-center gap-2.5 shadow-xl hidden sm:flex"
