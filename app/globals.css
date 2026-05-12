@@ -113,6 +113,29 @@ body {
   opacity: 0.4;
 }
 
+/* Pulse glow for Motion button */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 50px rgba(123,47,190,0.55), 0 0 100px rgba(123,47,190,0.2); transform: scale(1); }
+  50%       { box-shadow: 0 0 80px rgba(155,89,245,0.75), 0 0 160px rgba(155,89,245,0.3); transform: scale(1.03); }
+}
+.motion-btn-pulse { animation: pulse-glow 2.2s ease-in-out infinite; }
+
+/* Shake animation for idle hint */
+@keyframes wiggle {
+  0%,100% { transform: rotate(0deg); }
+  20% { transform: rotate(-4deg); }
+  40% { transform: rotate(4deg); }
+  60% { transform: rotate(-3deg); }
+  80% { transform: rotate(3deg); }
+}
+
+/* Spin fast for the reveal cycle */
+@keyframes spin-reveal {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.move-reveal { animation: spin-reveal 0.35s ease forwards; }
+
 /* ── Marquee animations ── */
 @keyframes marquee-left {
   0%   { transform: translateX(0); }
