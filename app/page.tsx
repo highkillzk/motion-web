@@ -349,53 +349,147 @@ export default function Home() {
       {/* ── SCREENSHOTS ── */}
       <section id="screenshots" className="py-20 overflow-hidden">
         <div ref={screenshotsRef} className="section-fade">
+          {/* Header */}
           <div className="max-w-6xl mx-auto px-6 text-center mb-16">
             <p className="text-xs font-semibold text-purple-400 tracking-widest uppercase mb-4">
               See It In Action
             </p>
             <h2 className="font-syne font-extrabold text-5xl md:text-6xl tracking-tight">
               Your nights,{" "}
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #9B59F5, #BF7FFF)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
+              <span style={{ background: "linear-gradient(135deg, #9B59F5, #BF7FFF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 elevated.
               </span>
             </h2>
+            <p className="text-white/40 text-lg mt-4 max-w-lg mx-auto">
+              Every screen built to get you moving faster and remember it longer.
+            </p>
           </div>
 
-          {/* Three phones */}
-          <div className="flex items-end justify-center gap-6 px-6">
-            {[
-              { src: "/ss1.png", label: "Hit Motion", offset: "translate-y-8", scale: "scale-90", opacity: "opacity-70" },
-              { src: "/ss2.png", label: "Your Crew", offset: "translate-y-0", scale: "scale-100", opacity: "opacity-100" },
-              { src: "/ss3.png", label: "Leaderboard", offset: "translate-y-8", scale: "scale-90", opacity: "opacity-70" },
-            ].map((ss, i) => (
-              <div
-                key={ss.label}
-                className={`relative flex flex-col items-center gap-4 ${ss.offset} ${ss.scale} ${ss.opacity} transition-all duration-300 hover:scale-100 hover:opacity-100 hover:translate-y-0`}
-              >
-                <div
-                  className="phone-mockup"
-                  style={{
-                    width: 220,
-                    boxShadow: i === 1
-                      ? "0 0 60px rgba(123,47,190,0.4), 0 30px 80px rgba(0,0,0,0.6)"
-                      : "0 20px 50px rgba(0,0,0,0.5)",
-                  }}
-                >
-                  <Image
-                    src={ss.src}
-                    alt={ss.label}
-                    width={220}
-                    height={477}
-                    className="w-full"
-                  />
+          {/* ── Marquee row 1 (scrolls left) ── */}
+          <div className="relative mb-6 overflow-hidden">
+            <div className="flex gap-5 marquee-left" style={{ width: "max-content" }}>
+              {[
+                { src: "/ss1.png", label: "Hit Motion" },
+                { src: "/ss2.png", label: "Your Crew" },
+                { src: "/ss3.png", label: "Leaderboard" },
+                { src: "/ss4.png", label: "The Archive" },
+                { src: "/ss5.png", label: "Your Profile" },
+                // duplicate for seamless loop
+                { src: "/ss1.png", label: "Hit Motion" },
+                { src: "/ss2.png", label: "Your Crew" },
+                { src: "/ss3.png", label: "Leaderboard" },
+                { src: "/ss4.png", label: "The Archive" },
+                { src: "/ss5.png", label: "Your Profile" },
+              ].map((ss, i) => (
+                <div key={i} className="flex-shrink-0 flex flex-col items-center gap-3">
+                  <div
+                    className="phone-mockup"
+                    style={{
+                      width: 200,
+                      boxShadow: "0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(123,47,190,0.15)",
+                    }}
+                  >
+                    <Image src={ss.src} alt={ss.label} width={200} height={433} className="w-full" />
+                  </div>
+                  <span className="text-xs font-medium text-white/35 tracking-wide">{ss.label}</span>
                 </div>
-                <span className="text-sm font-medium text-white/50">{ss.label}</span>
+              ))}
+            </div>
+            {/* Fade edges */}
+            <div className="absolute inset-y-0 left-0 w-32 pointer-events-none" style={{ background: "linear-gradient(to right, #06000F, transparent)" }} />
+            <div className="absolute inset-y-0 right-0 w-32 pointer-events-none" style={{ background: "linear-gradient(to left, #06000F, transparent)" }} />
+          </div>
+
+          {/* ── Marquee row 2 (scrolls right) ── */}
+          <div className="relative overflow-hidden">
+            <div className="flex gap-5 marquee-right" style={{ width: "max-content" }}>
+              {[
+                { src: "/ss6.png", label: "Memory Detail" },
+                { src: "/ss7.png", label: "Move Reveal" },
+                { src: "/ss8.png", label: "Quest Proof" },
+                { src: "/ss3.png", label: "Leaderboard" },
+                { src: "/ss1.png", label: "Hit Motion" },
+                // duplicate
+                { src: "/ss6.png", label: "Memory Detail" },
+                { src: "/ss7.png", label: "Move Reveal" },
+                { src: "/ss8.png", label: "Quest Proof" },
+                { src: "/ss3.png", label: "Leaderboard" },
+                { src: "/ss1.png", label: "Hit Motion" },
+              ].map((ss, i) => (
+                <div key={i} className="flex-shrink-0 flex flex-col items-center gap-3">
+                  <div
+                    className="phone-mockup"
+                    style={{
+                      width: 200,
+                      boxShadow: "0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(123,47,190,0.15)",
+                    }}
+                  >
+                    <Image src={ss.src} alt={ss.label} width={200} height={433} className="w-full" />
+                  </div>
+                  <span className="text-xs font-medium text-white/35 tracking-wide">{ss.label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="absolute inset-y-0 left-0 w-32 pointer-events-none" style={{ background: "linear-gradient(to right, #06000F, transparent)" }} />
+            <div className="absolute inset-y-0 right-0 w-32 pointer-events-none" style={{ background: "linear-gradient(to left, #06000F, transparent)" }} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── FEATURE SPOTLIGHT ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                screenshot: "/ss4.png",
+                tag: "The Archive",
+                title: "Every night, remembered forever.",
+                desc: "Your lore archive logs every move — photos, memories, vibes, quotes. The best part of a great night is reliving it.",
+                accent: "#9B59F5",
+              },
+              {
+                screenshot: "/ss7.png",
+                tag: "Move Reveal",
+                title: "One tap drops the perfect move.",
+                desc: "Chaos rating, cost, group size, time estimate. Everything you need to say yes instantly.",
+                accent: "#EF4444",
+              },
+              {
+                screenshot: "/ss5.png",
+                tag: "Your Profile",
+                title: "Level up your night life.",
+                desc: "Platinum, Amethyst, Legend — earn ranks, unlock badges, and prove you actually go outside.",
+                accent: "#22C55E",
+              },
+            ].map((item) => (
+              <div
+                key={item.tag}
+                className="rounded-2xl overflow-hidden"
+                style={{ background: "rgba(14,14,26,0.6)", border: "1px solid rgba(255,255,255,0.06)" }}
+              >
+                {/* Mini phone preview */}
+                <div className="flex justify-center py-8 px-8" style={{ background: `${item.accent}08` }}>
+                  <div
+                    className="phone-mockup"
+                    style={{
+                      width: 160,
+                      boxShadow: `0 20px 50px rgba(0,0,0,0.5), 0 0 40px ${item.accent}25`,
+                    }}
+                  >
+                    <Image src={item.screenshot} alt={item.title} width={160} height={346} className="w-full" />
+                  </div>
+                </div>
+                <div className="px-6 pb-8">
+                  <span
+                    className="inline-block text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4"
+                    style={{ background: `${item.accent}18`, color: item.accent }}
+                  >
+                    {item.tag}
+                  </span>
+                  <h3 className="font-syne font-bold text-xl mb-2 text-white">{item.title}</h3>
+                  <p className="text-white/45 text-sm leading-relaxed">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>

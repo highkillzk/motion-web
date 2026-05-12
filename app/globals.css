@@ -113,6 +113,26 @@ body {
   opacity: 0.4;
 }
 
+/* ── Marquee animations ── */
+@keyframes marquee-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-left {
+  animation: marquee-left 40s linear infinite;
+}
+.marquee-left:hover { animation-play-state: paused; }
+
+.marquee-right {
+  animation: marquee-right 40s linear infinite;
+}
+.marquee-right:hover { animation-play-state: paused; }
+
 /* App Store badge hover */
 .app-badge {
   transition: all 0.2s ease;
