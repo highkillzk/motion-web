@@ -184,7 +184,7 @@ function MotionDemo() {
             ) : (
               <p className="text-sm text-white/35 py-2">Want unlimited moves? Get the app. 🔥</p>
             )}
-            <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer"
+            <a href="https://apps.apple.com/us/app/motion-your-night-starts-here/id6767748988" target="_blank" rel="noopener noreferrer"
               className="py-4 rounded-2xl font-bold text-white text-base flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
               style={{ background: "linear-gradient(135deg, #7B2FBE, #9B59F5)", boxShadow: "0 0 30px rgba(123,47,190,0.45)" }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -203,7 +203,7 @@ function MotionDemo() {
 function AppStoreBtn({ size = "md", full = false }: { size?: "sm" | "md" | "lg"; full?: boolean }) {
   const pad = size === "lg" ? "px-10 py-5 text-lg gap-4" : size === "sm" ? "px-5 py-3 text-sm gap-2" : "px-8 py-4 text-base gap-3";
   return (
-    <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer"
+    <a href="https://apps.apple.com/us/app/motion-your-night-starts-here/id6767748988" target="_blank" rel="noopener noreferrer"
       className={`inline-flex items-center justify-center font-bold text-white rounded-2xl transition-all duration-200 hover:scale-105 active:scale-95 glow-purple ${pad} ${full ? "w-full" : ""}`}
       style={{ background: "linear-gradient(135deg, #7B2FBE, #9B59F5)" }}>
       <svg width={size === "lg" ? 24 : 20} height={size === "lg" ? 24 : 20} viewBox="0 0 24 24" fill="currentColor">

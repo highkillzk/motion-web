@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import InAppBrowserBanner from "../components/InAppBrowserBanner";
 
 export const metadata: Metadata = {
   title: "Motion — Find Things To Do With Friends",
   description:
     "Stop being bored. Motion picks tonight's move, your crew votes, and the night begins. 500+ curated activities for every vibe.",
-  metadataBase: new URL("https://getmotionapp.com"),
+  metadataBase: new URL("https://getmotionapp.quest"),
   openGraph: {
     title: "Motion — Find Things To Do With Friends",
     description:
       "One tap picks tonight's move. Your crew votes. The night begins.",
-    url: "https://getmotionapp.com",
+    url: "https://getmotionapp.quest",
     siteName: "Motion",
     locale: "en_US",
     type: "website",
@@ -45,6 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="bg-[#06000F] text-white antialiased overflow-x-hidden">
+        <InAppBrowserBanner />
         {children}
       </body>
     </html>
